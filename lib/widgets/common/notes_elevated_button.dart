@@ -8,14 +8,16 @@ class NotesElevatedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: Theme.of(context).elevatedButtonTheme.style?.copyWith(
-        padding: WidgetStateProperty.resolveWith(
-          (states) => const EdgeInsets.symmetric(horizontal: 100, vertical: 10),
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          foregroundColor: Theme.of(context).colorScheme.onPrimary,
         ),
+        onPressed: onPressed,
+        child: Text(text),
       ),
-      onPressed: onPressed,
-      child: Text(text),
     );
   }
 }

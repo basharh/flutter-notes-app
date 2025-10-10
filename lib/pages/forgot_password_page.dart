@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_notes_app/widgets/common/layout/layout.dart';
+import 'package:flutter_notes_app/widgets/common/notes_elevated_button.dart';
 import 'package:flutter_notes_app/widgets/common/notes_text_button_link.dart';
 import 'package:flutter_notes_app/widgets/common/notes_text_field.dart';
 
@@ -9,7 +10,7 @@ class ForgotPasswordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Layout(
-      title: 'Sign In',
+      title: 'Forgot Password',
       child: Stack(
         children: [
           Align(
@@ -19,7 +20,7 @@ class ForgotPasswordPage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Sign In',
+                  'Forgot Password',
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 Text(
@@ -52,7 +53,7 @@ class ForgotPasswordPage extends StatelessWidget {
 class _SendResetLinkButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
-      ElevatedButton(onPressed: () {}, child: Text('Send Reset Link'));
+      NotesElevatedButton(onPressed: () {}, text: 'Send Reset Link');
 }
 
 /// A widget that shows a sign in link with text
