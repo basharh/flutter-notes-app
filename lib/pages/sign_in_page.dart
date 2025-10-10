@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_notes_app/widgets/common/layout/layout.dart';
+import 'package:flutter_notes_app/widgets/common/notes_text_field.dart';
 
 class SignInPage extends StatelessWidget {
   const SignInPage({super.key});
@@ -170,31 +171,11 @@ class _ForgotPasswordLink extends StatelessWidget {
 
 class _PasswordField extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return TextField(
-      decoration: InputDecoration(
-        labelText: 'Password',
-        border: OutlineInputBorder(),
-        labelStyle: Theme.of(
-          context,
-        ).textTheme.bodyMedium?.copyWith(color: Colors.grey),
-      ),
-      obscureText: true,
-    );
-  }
+  Widget build(BuildContext context) =>
+      NotesTextField(labelText: 'Password', obscureText: true);
 }
 
 class _UsernameField extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return TextField(
-      decoration: InputDecoration(
-        labelText: 'User Name',
-        border: OutlineInputBorder(),
-        labelStyle: Theme.of(
-          context,
-        ).textTheme.bodyMedium?.copyWith(color: Colors.grey),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => NotesTextField(labelText: 'User Name');
 }
