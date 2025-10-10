@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_notes_app/widgets/common/layout/layout.dart';
+import 'package:flutter_notes_app/widgets/common/notes_elevated_button.dart';
 import 'package:flutter_notes_app/widgets/common/notes_text_field.dart';
 
 class SignInPage extends StatelessWidget {
@@ -136,17 +137,7 @@ class _OrContinueDivider extends StatelessWidget {
 class _LoginButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: Theme.of(context).elevatedButtonTheme.style?.copyWith(
-        padding: WidgetStateProperty.resolveWith(
-          (states) => const EdgeInsets.symmetric(horizontal: 100, vertical: 10),
-        ),
-      ),
-      onPressed: () {
-        // Implement sign-in logic here
-      },
-      child: const Text('Login'),
-    );
+    return NotesElevatedButton(text: 'Login', onPressed: () {});
   }
 }
 
