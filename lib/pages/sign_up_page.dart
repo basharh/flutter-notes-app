@@ -90,7 +90,7 @@ class _AgreeToTermsText extends StatelessWidget {
   }
 }
 
-/// A widget that shows a sign in link with some text
+/// A widget that shows a sign in link with text
 class _SignInLinkWithText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
