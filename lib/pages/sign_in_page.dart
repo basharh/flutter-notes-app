@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_notes_app/providers/auth_service.dart';
 import 'package:flutter_notes_app/widgets/common/layout/layout.dart';
 import 'package:flutter_notes_app/widgets/common/notes_elevated_button.dart';
 import 'package:flutter_notes_app/widgets/common/notes_text_field.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SignInPage extends StatelessWidget {
   const SignInPage({super.key});
@@ -76,9 +78,11 @@ class _SignUpLink extends StatelessWidget {
 }
 
 /// Social Login Links row
-class _SocialLoginLinks extends StatelessWidget {
+class _SocialLoginLinks extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authService = ref.read(authServiceProvider);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       spacing: 12,
@@ -91,7 +95,9 @@ class _SocialLoginLinks extends StatelessWidget {
             size: 24.0,
             semanticLabel: 'Google Icon',
           ),
-          onPressed: () {},
+          onPressed: () {
+            authService.signInWithGoogle();
+          },
         ),
         FilledButton.tonalIcon(
           label: Text('Facebook'),
