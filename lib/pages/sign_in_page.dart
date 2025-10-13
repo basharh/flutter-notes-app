@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_notes_app/providers/auth_service.dart';
-import 'package:flutter_notes_app/services/auth_service.dart';
 import 'package:flutter_notes_app/widgets/common/layout/layout.dart';
 import 'package:flutter_notes_app/widgets/common/notes_elevated_button.dart';
 import 'package:flutter_notes_app/widgets/common/notes_text_field.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 
 class SignInPage extends StatelessWidget {
   const SignInPage({super.key});
@@ -130,11 +130,10 @@ class _SignInWithGoogleButton extends ConsumerWidget {
 
     return FilledButton.tonalIcon(
       label: Text('Google'),
-      icon: Icon(
-        Icons.favorite,
-        color: Colors.pink,
-        size: 24.0,
-        semanticLabel: 'Google Icon',
+      icon: SvgPicture.asset(
+        'assets/icons/google_icon.svg',
+        height: 24.0,
+        width: 24.0,
       ),
       onPressed: () {
         try {
