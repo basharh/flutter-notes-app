@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_notes_app/providers/auth_service.dart';
+import 'package:flutter_notes_app/services/auth_service.dart';
 import 'package:flutter_notes_app/widgets/common/layout/layout.dart';
 import 'package:flutter_notes_app/widgets/common/notes_elevated_button.dart';
 import 'package:flutter_notes_app/widgets/common/notes_text_field.dart';
@@ -78,39 +79,74 @@ class _SignUpLink extends StatelessWidget {
 }
 
 /// Social Login Links row
-class _SocialLoginLinks extends ConsumerWidget {
+class _SocialLoginLinks extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      spacing: 12,
+      children: [_SignInWithGoogleButton(), _SignInWithFacebookButton()],
+    );
+  }
+}
+
+class _SignInWithFacebookButton extends ConsumerWidget {
+  const _SignInWithFacebookButton();
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authService = ref.read(authServiceProvider);
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      spacing: 12,
-      children: [
-        FilledButton.tonalIcon(
-          label: Text('Google'),
-          icon: Icon(
-            Icons.favorite,
-            color: Colors.pink,
-            size: 24.0,
-            semanticLabel: 'Google Icon',
-          ),
-          onPressed: () {
-            authService.signInWithGoogle();
-          },
-        ),
-        FilledButton.tonalIcon(
-          label: Text('Facebook'),
-          icon: Icon(
-            Icons.facebook_outlined,
-            color: Colors.blue,
-            size: 24.0,
-            semanticLabel: 'Facebook Icon',
-          ),
+    return FilledButton.tonalIcon(
+      label: Text('Facebook'),
+      icon: Icon(
+        Icons.facebook_outlined,
+        color: Colors.blue,
+        size: 24.0,
+        semanticLabel: 'Facebook Icon',
+      ),
 
-          onPressed: () {},
-        ),
-      ],
+      onPressed: () {
+        try {
+          authService.signInWithFacebook();
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Error signing in with Facebook: $e')),
+          );
+        }
+
+        Navigator.pushNamed(context, '/notes');
+      },
+    );
+  }
+}
+
+class _SignInWithGoogleButton extends ConsumerWidget {
+  const _SignInWithGoogleButton();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authService = ref.read(authServiceProvider);
+
+    return FilledButton.tonalIcon(
+      label: Text('Google'),
+      icon: Icon(
+        Icons.favorite,
+        color: Colors.pink,
+        size: 24.0,
+        semanticLabel: 'Google Icon',
+      ),
+      onPressed: () {
+        try {
+          authService.signInWithGoogle();
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Error signing in with Google: $e')),
+          );
+        }
+
+        Navigator.pushNamed(context, '/notes');
+      },
     );
   }
 }
@@ -128,7 +164,7 @@ class _OrContinueDivider extends StatelessWidget {
           height: 1,
           color: Colors.grey,
         ),
-        Text('Or Continue with'),
+        Text('Or Continue With'),
         Container(
           width: MediaQuery.of(context).size.width * 0.15,
           height: 1,

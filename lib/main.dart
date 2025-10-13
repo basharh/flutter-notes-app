@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_notes_app/pages/forgot_password_page.dart';
+import 'package:flutter_notes_app/pages/notes_page.dart';
 import 'package:flutter_notes_app/pages/sign_in_page.dart';
 import 'package:flutter_notes_app/pages/sign_up_page.dart';
 import 'package:flutter_notes_app/utils/init.dart';
@@ -12,7 +13,7 @@ void main() {
 class FlutterNotesApp extends ConsumerWidget {
   final String initialRoute;
 
-  const FlutterNotesApp({super.key, this.initialRoute = '/sign_in'});
+  const FlutterNotesApp({super.key, this.initialRoute = '/notes'});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -46,6 +47,7 @@ class FlutterNotesApp extends ConsumerWidget {
               '/sign_in': (_) => const SignInPage(),
               '/sign_up': (_) => const SignUpPage(),
               '/forgot_password': (_) => const ForgotPasswordPage(),
+              '/notes': (_) => const NotesPage(),
             },
           ),
         );
