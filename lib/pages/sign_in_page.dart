@@ -114,7 +114,7 @@ class _SignInWithFacebookButton extends ConsumerWidget {
           );
         }
 
-        Navigator.pushNamed(context, '/notes');
+        Navigator.pushReplacementNamed(context, '/notes');
       },
     );
   }
@@ -143,7 +143,7 @@ class _SignInWithGoogleButton extends ConsumerWidget {
           );
         }
 
-        Navigator.pushNamed(context, '/notes');
+        Navigator.pushReplacementNamed(context, '/notes');
       },
     );
   }

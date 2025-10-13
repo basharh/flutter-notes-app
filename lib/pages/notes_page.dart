@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_notes_app/pages/signed_out_page.dart';
 import 'package:flutter_notes_app/providers/auth_service.dart';
 import 'package:flutter_notes_app/providers/user.dart';
 import 'package:flutter_notes_app/widgets/common/layout/layout.dart';
@@ -18,6 +19,10 @@ class NotesPage extends ConsumerWidget {
         return Text('Error: $err, $stack');
       },
       data: (user) {
+        if (user == null) {
+          return SignedOutPage();
+        }
+
         return Layout(
           actions: [
             IconButton(
@@ -37,11 +42,7 @@ class NotesPage extends ConsumerWidget {
             ),
           ],
           title: 'Notes',
-          child: Center(
-            child: user == null
-                ? const Text('No user')
-                : Text('Hello, ${user.displayName}!'),
-          ),
+          child: Center(child: Text('Hello, ${user.displayName}!')),
         );
       },
     );
