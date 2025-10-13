@@ -10,7 +10,6 @@ class ForgotPasswordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Layout(
-      title: 'Forgot Password',
       child: Stack(
         children: [
           Align(

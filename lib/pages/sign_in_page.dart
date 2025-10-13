@@ -12,7 +12,6 @@ class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Layout(
-      title: 'Sign In',
       child: Stack(
         children: [
           Align(
@@ -69,7 +68,7 @@ class _SignUpLink extends StatelessWidget {
         const Text("Don't have an account?"),
         TextButton(
           onPressed: () {
-            Navigator.pushNamed(context, '/sign_up');
+            Navigator.pushReplacementNamed(context, '/sign_up');
           },
           child: const Text('Sign Up'),
         ),

@@ -5,20 +5,22 @@ class Layout extends StatelessWidget {
   final List<Widget>? actions;
   final String title;
 
-  const Layout({
-    super.key,
-    required this.child,
-    this.actions,
-    this.title = 'Flutter Notes App',
-  });
+  const Layout({super.key, required this.child, this.actions, this.title = ''});
 
   @override
   Widget build(BuildContext context) {
+    final noAppBar = title == '' && actions?.isEmpty != false;
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(title, style: Theme.of(context).textTheme.headlineSmall),
-        actions: [...?actions],
-      ),
+      appBar: noAppBar
+          ? null
+          : AppBar(
+              title: Text(
+                title,
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              actions: [...?actions],
+            ),
       body: Container(
         padding: const EdgeInsets.symmetric(
           horizontal: 30,

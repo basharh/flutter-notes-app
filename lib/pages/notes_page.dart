@@ -31,7 +31,7 @@ class NotesPage extends ConsumerWidget {
                   );
                 }
 
-                Navigator.pushNamed(context, '/sign_in');
+                Navigator.pushReplacementNamed(context, '/sign_in');
               },
               tooltip: 'Sign Out',
             ),

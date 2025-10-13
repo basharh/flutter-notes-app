@@ -10,7 +10,6 @@ class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Layout(
-      title: 'Sign Up',
       child: Stack(
         children: [
           Align(
