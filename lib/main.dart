@@ -4,6 +4,7 @@ import 'package:flutter_notes_app/pages/notes_page.dart';
 import 'package:flutter_notes_app/pages/sign_in_page.dart';
 import 'package:flutter_notes_app/pages/sign_up_page.dart';
 import 'package:flutter_notes_app/utils/init.dart';
+import 'package:flutter_notes_app/utils/theme_data.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
@@ -29,19 +30,8 @@ class FlutterNotesApp extends ConsumerWidget {
         return ProviderScope(
           overrides: [initInfoProvider.overrideWithValue(config)],
           child: MaterialApp(
-            title: 'Flutter Demo',
-            theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(
-                seedColor: Colors.indigo.shade900,
-              ),
-              elevatedButtonTheme: ElevatedButtonThemeData(
-                style: ElevatedButton.styleFrom(
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
-                  ),
-                ),
-              ),
-            ),
+            title: 'Flutter Notes App',
+            theme: getThemeData(Brightness.light),
             initialRoute: initialRoute,
             routes: {
               '/sign_in': (_) => const SignInPage(),

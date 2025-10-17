@@ -3,6 +3,7 @@ import 'package:flutter_notes_app/pages/signed_out_page.dart';
 import 'package:flutter_notes_app/providers/auth_service.dart';
 import 'package:flutter_notes_app/providers/user.dart';
 import 'package:flutter_notes_app/widgets/common/layout/layout.dart';
+import 'package:flutter_notes_app/widgets/notes/filtered_notes_grid.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class NotesPage extends ConsumerWidget {
@@ -42,7 +43,7 @@ class NotesPage extends ConsumerWidget {
             ),
           ],
           title: 'Notes',
-          child: Center(child: Text('Hello, ${user.displayName}!')),
+          child: FilteredNotesGrid(),
         );
       },
     );

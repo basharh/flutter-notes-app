@@ -23,8 +23,8 @@ class Layout extends StatelessWidget {
             ),
       body: Container(
         padding: const EdgeInsets.symmetric(
-          horizontal: 30,
-          vertical: 20,
+          horizontal: 20,
+          vertical: 15,
         ).copyWith(top: 0),
         child: Center(child: child),
       ),
