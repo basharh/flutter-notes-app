@@ -1,6 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_notes_app/models/note.dart';
 import 'package:flutter_notes_app/widgets/notes/notes_filter.dart';
 import 'package:flutter_notes_app/widgets/notes/single_note_card.dart';
+
+final notesRef = FirebaseFirestore.instance
+    .collection('notes')
+    .withConverter<Note>(
+      fromFirestore: (snapshots, _) => Note.fromJson(snapshots.data()!),
+      toFirestore: (note, _) => note.toJson(),
+    );
 
 class FilteredNotesGrid extends StatefulWidget {
   const FilteredNotesGrid({super.key});
@@ -36,18 +45,34 @@ class _FilteredNotesGridState extends State<FilteredNotesGrid> {
 class _NotesGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-      ),
-      itemCount: 20, // Example item count
-      itemBuilder: (context, index) {
-        return SingleNoteCard(
-          title: 'Note ${index + 1}',
-          content: 'This is the content of note ${index + 1}.',
-          onTap: () {},
+    return StreamBuilder<QuerySnapshot<Note>>(
+      //stream: notesRef.queryBy(query).snapshots(),
+      stream: notesRef.snapshots(), // TODO: add query based on starred filter
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Center(child: Text(snapshot.error.toString()));
+        }
+
+        if (!snapshot.hasData) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        final data = snapshot.requireData;
+
+        return GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+          ),
+          itemCount: data.size,
+          itemBuilder: (context, index) {
+            return SingleNoteCard(
+              note: data.docs[index].data(),
+              noteReference: data.docs[index].reference,
+              onTap: () {},
+            );
+          },
         );
       },
     );
