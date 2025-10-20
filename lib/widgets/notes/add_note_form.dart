@@ -1,8 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_notes_app/models/note.dart';
 
+/// A form for adding or editing a note given an optional [note] and its [noteReference].
 class AddNoteForm extends StatefulWidget {
-  const AddNoteForm({super.key});
+  final Note? note;
+  final DocumentReference<Note>? noteReference;
+
+  const AddNoteForm({super.key, this.note, this.noteReference});
 
   @override
   State<AddNoteForm> createState() => _AddNoteFormState();
@@ -24,6 +29,30 @@ class _AddNoteFormState extends State<AddNoteForm> {
     });
   }
 
+  Future<void> _updateNote() async {
+    if (widget.noteReference == null || widget.note == null) {
+      return;
+    }
+
+    final title = _titleController.text;
+    final content = _contentController.text;
+
+    await widget.noteReference!.update({
+      'title': title,
+      'content': content,
+      'updatedAt': DateTime.now().toIso8601String(),
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.note != null && widget.noteReference != null) {
+      _titleController.text = widget.note!.title;
+      _contentController.text = widget.note!.content;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -43,7 +72,11 @@ class _AddNoteFormState extends State<AddNoteForm> {
           ),
           ElevatedButton(
             onPressed: () async {
-              await _saveNote();
+              if (widget.note != null && widget.noteReference != null) {
+                await _updateNote();
+              } else {
+                await _saveNote();
+              }
 
               if (mounted) {
                 // ignore: use_build_context_synchronously
@@ -55,5 +88,12 @@ class _AddNoteFormState extends State<AddNoteForm> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _contentController.dispose();
+    super.dispose();
   }
 }

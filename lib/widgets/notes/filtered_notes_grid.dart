@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_notes_app/models/note.dart';
+import 'package:flutter_notes_app/utils/notes.dart';
 import 'package:flutter_notes_app/widgets/notes/notes_filter.dart';
 import 'package:flutter_notes_app/widgets/notes/single_note_card.dart';
 
@@ -67,10 +68,19 @@ class _NotesGrid extends StatelessWidget {
           ),
           itemCount: data.size,
           itemBuilder: (context, index) {
+            final note = data.docs[index].data();
+            final noteReference = data.docs[index].reference;
+
             return SingleNoteCard(
-              note: data.docs[index].data(),
-              noteReference: data.docs[index].reference,
-              onTap: () {},
+              note: note,
+              noteReference: noteReference,
+              onTap: () {
+                showNoteModalBottomSheet(
+                  context: context,
+                  note: note,
+                  noteReference: noteReference,
+                );
+              },
             );
           },
         );
