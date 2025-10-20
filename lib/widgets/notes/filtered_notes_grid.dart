@@ -37,18 +37,23 @@ class _FilteredNotesGridState extends State<FilteredNotesGrid> {
             });
           },
         ),
-        Expanded(child: _NotesGrid()),
+        Expanded(child: _NotesGrid(filterChoice: selectedFilter)),
       ],
     );
   }
 }
 
 class _NotesGrid extends StatelessWidget {
+  final FilterChoice filterChoice;
+
+  const _NotesGrid({required this.filterChoice});
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot<Note>>(
-      //stream: notesRef.queryBy(query).snapshots(),
-      stream: notesRef.snapshots(), // TODO: add query based on starred filter
+      stream: filterChoice == FilterChoice.starred
+          ? notesRef.where('starred', isEqualTo: true).snapshots()
+          : notesRef.snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Center(child: Text(snapshot.error.toString()));
