@@ -4,8 +4,15 @@ class Layout extends StatelessWidget {
   final Widget child;
   final List<Widget>? actions;
   final String title;
+  final Widget? floatingActionButton;
 
-  const Layout({super.key, required this.child, this.actions, this.title = ''});
+  const Layout({
+    super.key,
+    required this.child,
+    this.actions,
+    this.title = '',
+    this.floatingActionButton,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +28,7 @@ class Layout extends StatelessWidget {
               ),
               actions: [...?actions],
             ),
+      floatingActionButton: floatingActionButton,
       body: Container(
         padding: const EdgeInsets.symmetric(
           horizontal: 20,
