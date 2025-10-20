@@ -29,18 +29,27 @@ class SingleNoteCard extends StatelessWidget {
                 child: IconButton(
                   alignment: Alignment.topRight,
                   padding: EdgeInsets.zero,
-                  icon: const Icon(Icons.star_outline_outlined, size: 20.0),
-                  onPressed: () {
-                    // TODO: create a firestore transaction and toggle the starred field
+                  icon: note.starred
+                      ? const Icon(Icons.star, size: 20.0, color: Colors.amber)
+                      : const Icon(Icons.star_outline_outlined, size: 20.0),
+                  highlightColor: Colors.transparent,
+                  onPressed: () async {
+                    await noteReference.update({
+                      'starred': !note.starred,
+                      'updatedAt': DateTime.now().toIso8601String(),
+                    });
                   },
                 ),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    note.title,
-                    style: Theme.of(context).textTheme.titleMedium,
+                  FractionallySizedBox(
+                    widthFactor: .85,
+                    child: Text(
+                      note.title,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
                   ),
                   const SizedBox(height: 8.0),
                   FractionallySizedBox(
