@@ -8,16 +8,19 @@ class SignedOutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Layout(
-      child: Wrap(
-        alignment: WrapAlignment.center,
-        crossAxisAlignment: WrapCrossAlignment.center,
-        children: [
-          NotesTextButtonLink(link: '/sign_in', text: 'Sign In '),
-          Text(
-            'to see your notes',
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-        ],
+      child: Center(
+        child: Wrap(
+          alignment: WrapAlignment.center,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            NotesTextButtonLink(link: '/sign_in', text: 'Sign In '),
+            SizedBox(width: 8),
+            Text(
+              'to see your notes',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          ],
+        ),
       ),
     );
   }
