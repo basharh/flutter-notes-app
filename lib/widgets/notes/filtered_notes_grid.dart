@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_notes_app/models/note.dart';
 import 'package:flutter_notes_app/utils/notes.dart';
@@ -13,7 +14,9 @@ final notesRef = FirebaseFirestore.instance
     );
 
 class FilteredNotesGrid extends StatefulWidget {
-  const FilteredNotesGrid({super.key});
+  final User user;
+
+  const FilteredNotesGrid({super.key, required this.user});
 
   @override
   State<FilteredNotesGrid> createState() => _FilteredNotesGridState();
@@ -37,23 +40,29 @@ class _FilteredNotesGridState extends State<FilteredNotesGrid> {
             });
           },
         ),
-        Expanded(child: _NotesGrid(filterChoice: selectedFilter)),
+        Expanded(
+          child: _NotesGrid(filterChoice: selectedFilter, user: widget.user),
+        ),
       ],
     );
   }
 }
 
 class _NotesGrid extends StatelessWidget {
+  final User user;
   final FilterChoice filterChoice;
 
-  const _NotesGrid({required this.filterChoice});
+  const _NotesGrid({required this.filterChoice, required this.user});
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot<Note>>(
       stream: filterChoice == FilterChoice.starred
-          ? notesRef.where('starred', isEqualTo: true).snapshots()
-          : notesRef.snapshots(),
+          ? notesRef
+                .where('starred', isEqualTo: true)
+                .where('uid', isEqualTo: user.uid)
+                .snapshots()
+          : notesRef.where('uid', isEqualTo: user.uid).snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Center(child: Text(snapshot.error.toString()));
@@ -82,6 +91,7 @@ class _NotesGrid extends StatelessWidget {
               onTap: () {
                 showNoteModalBottomSheet(
                   context: context,
+                  user: user,
                   note: note,
                   noteReference: noteReference,
                 );

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_notes_app/widgets/common/layout/layout.dart';
-import 'package:flutter_notes_app/widgets/common/notes_elevated_button.dart';
 import 'package:flutter_notes_app/widgets/common/notes_text_button_link.dart';
-import 'package:flutter_notes_app/widgets/common/notes_text_field.dart';
+import 'package:flutter_notes_app/widgets/sign_up/sign_up_form.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({super.key});
@@ -30,19 +29,7 @@ class SignUpPage extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 24),
-                Column(
-                  children: [
-                    NotesTextField(labelText: 'User Name'),
-                    SizedBox(height: 12),
-                    NotesTextField(labelText: 'Email'),
-                    SizedBox(height: 12),
-                    NotesTextField(labelText: 'Password', obscureText: true),
-                    SizedBox(height: 12),
-                    _AgreeToTermsText(),
-                    SizedBox(height: 12),
-                    _CreateAccountButton(),
-                  ],
-                ),
+                SignUpForm(),
               ],
             ),
           ),
@@ -52,39 +39,6 @@ class SignUpPage extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-class _CreateAccountButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) =>
-      NotesElevatedButton(onPressed: () {}, text: 'Create Account');
-}
-
-/// A widget that shows agree to terms and privacy policy text
-class _AgreeToTermsText extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Wrap(
-      alignment: WrapAlignment.center,
-      crossAxisAlignment: WrapCrossAlignment.center,
-      children: [
-        Text(
-          'By creating an account, you agree to our ',
-          style: Theme.of(
-            context,
-          ).textTheme.bodySmall?.copyWith(color: Colors.grey),
-        ),
-        NotesTextButtonLink(link: '/terms', text: 'Terms of Service'),
-        Text(
-          ' and ',
-          style: Theme.of(
-            context,
-          ).textTheme.bodySmall?.copyWith(color: Colors.grey),
-        ),
-        NotesTextButtonLink(link: '/privacy', text: 'Privacy Policy'),
-      ],
     );
   }
 }

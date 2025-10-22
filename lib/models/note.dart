@@ -6,9 +6,9 @@ part 'note.g.dart';
 @freezed
 abstract class Note with _$Note {
   factory Note({
-    //required String id,
     required String title,
     required String content,
+    required String uid,
     @Default(false) bool starred,
     @TimestampSerializer() required DateTime createdAt,
     @TimestampSerializer() required DateTime updatedAt,

@@ -15,8 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Note {
 
-//required String id,
- String get title; String get content; bool get starred;@TimestampSerializer() DateTime get createdAt;@TimestampSerializer() DateTime get updatedAt;
+ String get title; String get content; String get uid; bool get starred;@TimestampSerializer() DateTime get createdAt;@TimestampSerializer() DateTime get updatedAt;
 /// Create a copy of Note
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -29,16 +28,16 @@ $NoteCopyWith<Note> get copyWith => _$NoteCopyWithImpl<Note>(this as Note, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Note&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&(identical(other.starred, starred) || other.starred == starred)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Note&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&(identical(other.uid, uid) || other.uid == uid)&&(identical(other.starred, starred) || other.starred == starred)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,content,starred,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,title,content,uid,starred,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'Note(title: $title, content: $content, starred: $starred, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'Note(title: $title, content: $content, uid: $uid, starred: $starred, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -49,7 +48,7 @@ abstract mixin class $NoteCopyWith<$Res>  {
   factory $NoteCopyWith(Note value, $Res Function(Note) _then) = _$NoteCopyWithImpl;
 @useResult
 $Res call({
- String title, String content, bool starred,@TimestampSerializer() DateTime createdAt,@TimestampSerializer() DateTime updatedAt
+ String title, String content, String uid, bool starred,@TimestampSerializer() DateTime createdAt,@TimestampSerializer() DateTime updatedAt
 });
 
 
@@ -66,10 +65,11 @@ class _$NoteCopyWithImpl<$Res>
 
 /// Create a copy of Note
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? content = null,Object? starred = null,Object? createdAt = null,Object? updatedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? title = null,Object? content = null,Object? uid = null,Object? starred = null,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_self.copyWith(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as String,uid: null == uid ? _self.uid : uid // ignore: cast_nullable_to_non_nullable
 as String,starred: null == starred ? _self.starred : starred // ignore: cast_nullable_to_non_nullable
 as bool,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -158,10 +158,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String title,  String content,  bool starred, @TimestampSerializer()  DateTime createdAt, @TimestampSerializer()  DateTime updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String title,  String content,  String uid,  bool starred, @TimestampSerializer()  DateTime createdAt, @TimestampSerializer()  DateTime updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Note() when $default != null:
-return $default(_that.title,_that.content,_that.starred,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.title,_that.content,_that.uid,_that.starred,_that.createdAt,_that.updatedAt);case _:
   return orElse();
 
 }
@@ -179,10 +179,10 @@ return $default(_that.title,_that.content,_that.starred,_that.createdAt,_that.up
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String title,  String content,  bool starred, @TimestampSerializer()  DateTime createdAt, @TimestampSerializer()  DateTime updatedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String title,  String content,  String uid,  bool starred, @TimestampSerializer()  DateTime createdAt, @TimestampSerializer()  DateTime updatedAt)  $default,) {final _that = this;
 switch (_that) {
 case _Note():
-return $default(_that.title,_that.content,_that.starred,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.title,_that.content,_that.uid,_that.starred,_that.createdAt,_that.updatedAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -199,10 +199,10 @@ return $default(_that.title,_that.content,_that.starred,_that.createdAt,_that.up
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String title,  String content,  bool starred, @TimestampSerializer()  DateTime createdAt, @TimestampSerializer()  DateTime updatedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String title,  String content,  String uid,  bool starred, @TimestampSerializer()  DateTime createdAt, @TimestampSerializer()  DateTime updatedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _Note() when $default != null:
-return $default(_that.title,_that.content,_that.starred,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.title,_that.content,_that.uid,_that.starred,_that.createdAt,_that.updatedAt);case _:
   return null;
 
 }
@@ -214,12 +214,12 @@ return $default(_that.title,_that.content,_that.starred,_that.createdAt,_that.up
 @JsonSerializable()
 
 class _Note implements Note {
-   _Note({required this.title, required this.content, this.starred = false, @TimestampSerializer() required this.createdAt, @TimestampSerializer() required this.updatedAt});
+   _Note({required this.title, required this.content, required this.uid, this.starred = false, @TimestampSerializer() required this.createdAt, @TimestampSerializer() required this.updatedAt});
   factory _Note.fromJson(Map<String, dynamic> json) => _$NoteFromJson(json);
 
-//required String id,
 @override final  String title;
 @override final  String content;
+@override final  String uid;
 @override@JsonKey() final  bool starred;
 @override@TimestampSerializer() final  DateTime createdAt;
 @override@TimestampSerializer() final  DateTime updatedAt;
@@ -237,16 +237,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Note&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&(identical(other.starred, starred) || other.starred == starred)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Note&&(identical(other.title, title) || other.title == title)&&(identical(other.content, content) || other.content == content)&&(identical(other.uid, uid) || other.uid == uid)&&(identical(other.starred, starred) || other.starred == starred)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,title,content,starred,createdAt,updatedAt);
+int get hashCode => Object.hash(runtimeType,title,content,uid,starred,createdAt,updatedAt);
 
 @override
 String toString() {
-  return 'Note(title: $title, content: $content, starred: $starred, createdAt: $createdAt, updatedAt: $updatedAt)';
+  return 'Note(title: $title, content: $content, uid: $uid, starred: $starred, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -257,7 +257,7 @@ abstract mixin class _$NoteCopyWith<$Res> implements $NoteCopyWith<$Res> {
   factory _$NoteCopyWith(_Note value, $Res Function(_Note) _then) = __$NoteCopyWithImpl;
 @override @useResult
 $Res call({
- String title, String content, bool starred,@TimestampSerializer() DateTime createdAt,@TimestampSerializer() DateTime updatedAt
+ String title, String content, String uid, bool starred,@TimestampSerializer() DateTime createdAt,@TimestampSerializer() DateTime updatedAt
 });
 
 
@@ -274,10 +274,11 @@ class __$NoteCopyWithImpl<$Res>
 
 /// Create a copy of Note
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? content = null,Object? starred = null,Object? createdAt = null,Object? updatedAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? title = null,Object? content = null,Object? uid = null,Object? starred = null,Object? createdAt = null,Object? updatedAt = null,}) {
   return _then(_Note(
 title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
+as String,uid: null == uid ? _self.uid : uid // ignore: cast_nullable_to_non_nullable
 as String,starred: null == starred ? _self.starred : starred // ignore: cast_nullable_to_non_nullable
 as bool,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable

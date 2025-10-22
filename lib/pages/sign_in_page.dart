@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_notes_app/providers/auth_service.dart';
 import 'package:flutter_notes_app/widgets/common/layout/layout.dart';
-import 'package:flutter_notes_app/widgets/common/notes_elevated_button.dart';
-import 'package:flutter_notes_app/widgets/common/notes_text_field.dart';
+import 'package:flutter_notes_app/widgets/sign_in/sign_in_form.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -32,18 +31,7 @@ class SignInPage extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 24),
-                Column(
-                  children: [
-                    _UsernameField(),
-                    SizedBox(height: 12),
-                    _PasswordField(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [_ForgotPasswordLink()],
-                    ),
-                    _LoginButton(),
-                  ],
-                ),
+                SignInForm(),
                 SizedBox(height: 12),
                 _OrContinueDivider(),
                 SizedBox(height: 12),
@@ -64,6 +52,7 @@ class _SignUpLink extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
+      spacing: 8,
       children: [
         const Text("Don't have an account?"),
         TextButton(
@@ -171,42 +160,4 @@ class _OrContinueDivider extends StatelessWidget {
       ],
     );
   }
-}
-
-/// Login Button
-class _LoginButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return NotesElevatedButton(text: 'Login', onPressed: () {});
-  }
-}
-
-/// Forgot Password Link
-class _ForgotPasswordLink extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      style: TextButton.styleFrom(
-        padding: EdgeInsets.zero,
-        minimumSize: const Size(50, 30),
-        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        alignment: Alignment.centerLeft,
-      ),
-      onPressed: () {
-        Navigator.pushNamed(context, '/forgot_password');
-      },
-      child: const Text('Forgot Password?', style: TextStyle(fontSize: 12)),
-    );
-  }
-}
-
-class _PasswordField extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) =>
-      NotesTextField(labelText: 'Password', obscureText: true);
-}
-
-class _UsernameField extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) => NotesTextField(labelText: 'User Name');
 }

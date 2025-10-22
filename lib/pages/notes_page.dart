@@ -28,7 +28,7 @@ class NotesPage extends ConsumerWidget {
         return Layout(
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              showNoteModalBottomSheet(context: context);
+              showNoteModalBottomSheet(context: context, user: user);
             },
             tooltip: 'Add Note',
             child: const Icon(Icons.add),
@@ -51,7 +51,7 @@ class NotesPage extends ConsumerWidget {
             ),
           ],
           title: 'Notes',
-          child: FilteredNotesGrid(),
+          child: FilteredNotesGrid(user: user),
         );
       },
     );

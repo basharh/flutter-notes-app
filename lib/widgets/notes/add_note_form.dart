@@ -1,13 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_notes_app/models/note.dart';
 
 /// A form for adding or editing a note given an optional [note] and its [noteReference].
 class AddNoteForm extends StatefulWidget {
+  final User user;
   final Note? note;
   final DocumentReference<Note>? noteReference;
 
-  const AddNoteForm({super.key, this.note, this.noteReference});
+  const AddNoteForm({
+    super.key,
+    this.note,
+    this.noteReference,
+    required this.user,
+  });
 
   @override
   State<AddNoteForm> createState() => _AddNoteFormState();
@@ -26,6 +33,7 @@ class _AddNoteFormState extends State<AddNoteForm> {
       'content': content,
       'createdAt': DateTime.now().toIso8601String(),
       'updatedAt': DateTime.now().toIso8601String(),
+      'uid': widget.user.uid,
     });
   }
 
