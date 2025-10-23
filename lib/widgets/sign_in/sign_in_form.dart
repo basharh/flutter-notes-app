@@ -4,15 +4,19 @@ import 'package:flutter_notes_app/widgets/common/notes_elevated_button.dart';
 import 'package:flutter_notes_app/widgets/common/notes_text_field.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SignInForm extends ConsumerWidget {
-  // TODO: check if better to have these in the state
+class SignInForm extends ConsumerStatefulWidget {
+  const SignInForm({super.key});
+
+  @override
+  ConsumerState<SignInForm> createState() => _SignInFormState();
+}
+
+class _SignInFormState extends ConsumerState<SignInForm> {
   final _emailAddressController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  SignInForm({super.key});
-
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Column(
       children: [
         NotesTextField(
@@ -45,6 +49,13 @@ class SignInForm extends ConsumerWidget {
         ),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    _emailAddressController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 }
 
