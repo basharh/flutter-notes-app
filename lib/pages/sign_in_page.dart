@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_notes_app/providers/auth_service.dart';
+import 'package:flutter_notes_app/utils/auth.dart';
 import 'package:flutter_notes_app/widgets/common/layout/layout.dart';
 import 'package:flutter_notes_app/widgets/sign_in/sign_in_form.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -112,10 +113,24 @@ class _SignInWithFacebookButton extends ConsumerWidget {
 class _SignInWithGoogleButton extends ConsumerWidget {
   const _SignInWithGoogleButton();
 
+  Future<void> _signIn(BuildContext context, WidgetRef ref) async {
+    try {
+      await ref.read(authServiceProvider).signInWithGoogle();
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(getErrorMessageForAuthException(e))),
+        );
+      }
+    }
+
+    if (context.mounted) {
+      Navigator.pushReplacementNamed(context, '/notes');
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final authService = ref.read(authServiceProvider);
-
     return FilledButton.tonalIcon(
       label: Text('Google'),
       icon: SvgPicture.asset(
@@ -123,17 +138,7 @@ class _SignInWithGoogleButton extends ConsumerWidget {
         height: 24.0,
         width: 24.0,
       ),
-      onPressed: () {
-        try {
-          authService.signInWithGoogle();
-        } catch (e) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Error signing in with Google: $e')),
-          );
-        }
-
-        Navigator.pushReplacementNamed(context, '/notes');
-      },
+      onPressed: () => _signIn(context, ref),
     );
   }
 }

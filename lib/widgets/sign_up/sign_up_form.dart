@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_notes_app/providers/auth_service.dart';
+import 'package:flutter_notes_app/utils/auth.dart';
 import 'package:flutter_notes_app/widgets/common/notes_elevated_button.dart';
 import 'package:flutter_notes_app/widgets/common/notes_text_button_link.dart';
 import 'package:flutter_notes_app/widgets/common/notes_text_field.dart';
@@ -16,6 +17,34 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
   final _emailAddressController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  Future<void> _createAccount() async {
+    final authService = ref.read(authServiceProvider);
+
+    try {
+      await authService.createUserWithEmailAndPassword(
+        emailAddress: _emailAddressController.text,
+        password: _passwordController.text,
+      );
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(
+          // ignore: use_build_context_synchronously
+          context,
+        ).showSnackBar(
+          SnackBar(content: Text(getErrorMessageForAuthException(e))),
+        );
+        //).showSnackBar(SnackBar(content: Text('Error: $e')));
+      }
+
+      return;
+    }
+
+    if (context.mounted) {
+      // ignore: use_build_context_synchronously
+      Navigator.pushReplacementNamed(context, '/notes');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -30,30 +59,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
         SizedBox(height: 12),
         _AgreeToTermsText(),
         SizedBox(height: 12),
-        NotesElevatedButton(
-          onPressed: () async {
-            final authService = ref.read(authServiceProvider);
-
-            try {
-              await authService.createUserWithEmailAndPassword(
-                emailAddress: _emailAddressController.text,
-                password: _passwordController.text,
-              );
-            } catch (e) {
-              if (context.mounted) {
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(SnackBar(content: Text('Error: $e')));
-              }
-              return;
-            }
-
-            if (context.mounted) {
-              Navigator.pushReplacementNamed(context, '/notes');
-            }
-          },
-          text: 'Create Account',
-        ),
+        NotesElevatedButton(onPressed: _createAccount, text: 'Create Account'),
       ],
     );
   }

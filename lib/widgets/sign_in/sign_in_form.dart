@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_notes_app/providers/auth_service.dart';
+import 'package:flutter_notes_app/utils/auth.dart';
 import 'package:flutter_notes_app/widgets/common/notes_elevated_button.dart';
 import 'package:flutter_notes_app/widgets/common/notes_text_field.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,6 +15,36 @@ class SignInForm extends ConsumerStatefulWidget {
 class _SignInFormState extends ConsumerState<SignInForm> {
   final _emailAddressController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  Future<void> _signIn() async {
+    final authService = ref.read(authServiceProvider);
+
+    final emailAddress = _emailAddressController.text;
+    final password = _passwordController.text;
+
+    try {
+      await authService.signInWithEmailAndPassword(
+        emailAddress: emailAddress,
+        password: password,
+      );
+    } catch (e) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(
+          // ignore: use_build_context_synchronously
+          context,
+        ).showSnackBar(
+          SnackBar(content: Text(getErrorMessageForAuthException(e))),
+        );
+      }
+
+      return;
+    }
+
+    if (context.mounted) {
+      // ignore: use_build_context_synchronously
+      Navigator.pushReplacementNamed(context, '/notes');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,20 +64,7 @@ class _SignInFormState extends ConsumerState<SignInForm> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [_ForgotPasswordLink()],
         ),
-        NotesElevatedButton(
-          text: 'Login',
-          onPressed: () {
-            final authService = ref.read(authServiceProvider);
-
-            final emailAddress = _emailAddressController.text;
-            final password = _passwordController.text;
-
-            authService.signInWithEmailAndPassword(
-              emailAddress: emailAddress,
-              password: password,
-            );
-          },
-        ),
+        NotesElevatedButton(text: 'Login', onPressed: _signIn),
       ],
     );
   }
